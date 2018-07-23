@@ -1,8 +1,8 @@
 @echo off
 :main
 setlocal enabledelayedexpansion
-set v=1.2
-title AdminToolbox Updater v!v!
+set v=1.0
+title ServerMod Updater v!v!
 set "scp_appdata=%appdata%\SCP Secret Laboratory"
 set "data=%~dp0\SCPSL_Data\Managed"
 echo.
@@ -69,7 +69,7 @@ echo      Done.
 echo.
 if !_local_version! LSS !_sm_version! (
 	echo.
-	echo  A newer version of Smod is available.
+	echo  A newer version of ServerMod is available.
 	echo.
 	echo  Your version: !local_version!
 	echo  New version:  !sm_version!
@@ -79,7 +79,7 @@ if !_local_version! LSS !_sm_version! (
 	goto :update
 ) else (
 	echo.
-	echo  Your Smod is up to date. ^(Local: v!local_version!   Online: v!sm_version!^)
+	echo  Your ServerMod is up to date. ^(Local: v!local_version!   Online: v!sm_version!^)
 	echo.
 	echo  Press any key to exit.
 	pause > nul
@@ -98,11 +98,11 @@ if !errorlevel!==0 (
 	endlocal
 	exit
 )
-set "link=https://github.com/Grover-c13/Smod/releases/download/%sm_version%/Smod2.dll"
-set "link=https://github.com/Grover-c13/Smod/releases/download/%sm_version%/Assembly-CSharp.dll"
-echo  Downloading Smod...
-powershell -command "& { $tls12 = [Enum]::ToObject([Net.SecurityProtocolType], 3072); [Net.ServicePointManager]::SecurityProtocol = $tls12; (New-Object Net.WebClient).DownloadFile('!link!', '!data!\Smod2.dll') }"
-powershell -command "& { $tls12 = [Enum]::ToObject([Net.SecurityProtocolType], 3072); [Net.ServicePointManager]::SecurityProtocol = $tls12; (New-Object Net.WebClient).DownloadFile('!link!', '!data!\Assembly-CSharp.dll') }"
+set "smod_link=https://github.com/Grover-c13/Smod/releases/download/%sm_version%/Smod2.dll"
+set "assembly_link=https://github.com/Grover-c13/Smod/releases/download/%sm_version%/Assembly-CSharp.dll"
+echo  Downloading required files...
+powershell -command "& { $tls12 = [Enum]::ToObject([Net.SecurityProtocolType], 3072); [Net.ServicePointManager]::SecurityProtocol = $tls12; (New-Object Net.WebClient).DownloadFile('!smod_link!', '!data!\Smod2.dll') }"
+powershell -command "& { $tls12 = [Enum]::ToObject([Net.SecurityProtocolType], 3072); [Net.ServicePointManager]::SecurityProtocol = $tls12; (New-Object Net.WebClient).DownloadFile('!assembly_link!', '!data!\Assembly-CSharp.dll') }"
 if exist "!data!\Smod2.dll" && "!data!\Assembly-CSharp.dll" (
 	echo  Done.
 	echo  Now running v!sm_version!
