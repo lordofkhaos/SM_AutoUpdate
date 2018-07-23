@@ -30,7 +30,7 @@ if exist "!scp_appdata!\n_sm_version.md" (
 )
 bitsadmin /create /download "sm_version" > nul
 bitsadmin /setnoprogresstimeout "sm_version" > nul
-bitsadmin /transfer "sm_version" "https://" "!scp_appdata!\n_sm_version.md" > nul
+bitsadmin /transfer "sm_version" "https://raw.githubusercontent.com/lordofkhaos/SM_AutoUpdate/master/sm_version.md" "!scp_appdata!\n_sm_version.md" > nul
 if !errorlevel!==0 (
 	bitsadmin /complete "sm_version" > nul
 ) else (
@@ -100,9 +100,10 @@ if !errorlevel!==0 (
 )
 set "link=https://github.com/Grover-c13/Smod/releases/download/%sm_version%/Smod2.dll"
 set "link=https://github.com/Grover-c13/Smod/releases/download/%sm_version%/Assembly-CSharp.dll"
-echo  Downloading AdminToolbox...
-powershell -command "& { $tls12 = [Enum]::ToObject([Net.SecurityProtocolType], 3072); [Net.ServicePointManager]::SecurityProtocol = $tls12; (New-Object Net.WebClient).DownloadFile('!link!', '!plugins!\AdminToolbox.dll') }"
-if exist "!data!\AdminToolbox.dll" (
+echo  Downloading Smod...
+powershell -command "& { $tls12 = [Enum]::ToObject([Net.SecurityProtocolType], 3072); [Net.ServicePointManager]::SecurityProtocol = $tls12; (New-Object Net.WebClient).DownloadFile('!link!', '!data!\Smod2.dll') }"
+powershell -command "& { $tls12 = [Enum]::ToObject([Net.SecurityProtocolType], 3072); [Net.ServicePointManager]::SecurityProtocol = $tls12; (New-Object Net.WebClient).DownloadFile('!link!', '!data!\Assembly-CSharp.dll') }"
+if exist "!data!\Smod2.dll" && "!data!\Assembly-CSharp.dll" (
 	echo  Done.
 	echo  Now running v!sm_version!
 ) else (
