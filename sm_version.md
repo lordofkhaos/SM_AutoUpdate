@@ -1,1 +1,1 @@
-sm_version=3.1.9-B
+sm_version=3.1.10
